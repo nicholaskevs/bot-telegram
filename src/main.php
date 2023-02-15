@@ -3,23 +3,13 @@
 require dirname(__DIR__).'/vendor/autoload.php';
 require dirname(__DIR__).'/config/cons.php';
 
-use Longman\TelegramBot\Telegram;
 use Longman\TelegramBot\TelegramLog;
 use TelegramBot\Lib\Bot;
 
 TelegramLog::initialize(Bot::createLogger('GetUpdatesBot'));
 
 try {
-	$bot = new Telegram(BOT_TOKEN, BOT_USERNAME);
-	
-	$bot->enableMySql([
-		'host'		=> DB_HOST,
-		'user'		=> DB_USERNAME,
-		'password'	=> DB_PASSWORD,
-		'database'	=> DB_DBNAME,
-	]);
-	
-	$bot->addCommandsPath(dirname(__DIR__).'/src/Command');
+	$bot = Bot::initBot();
 	
 	$response = $bot->handleGetUpdates();
 	

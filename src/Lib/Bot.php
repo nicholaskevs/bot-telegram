@@ -2,6 +2,7 @@
 
 namespace TelegramBot\Lib;
 
+use Longman\TelegramBot\Telegram;
 use Medoo\Medoo;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Handler\StreamHandler;
@@ -28,5 +29,20 @@ Class Bot
 		}
 		
 		return $logger;
+	}
+	
+	public static function initBot() {
+		$bot = new Telegram(BOT_TOKEN, BOT_USERNAME);
+		
+		$bot->enableMySql([
+			'host'		=> DB_HOST,
+			'user'		=> DB_USERNAME,
+			'password'	=> DB_PASSWORD,
+			'database'	=> DB_DBNAME,
+		]);
+		
+		$bot->addCommandsPath(dirname(__DIR__).'/Command');
+		
+		return $bot;
 	}
 }
