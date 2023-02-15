@@ -25,9 +25,10 @@ class TestCommand extends UserCommand
 		];
 		
 		// return Request::sendMessage($data);
-		return $this->replyToChat(
-			'Hi there!' . PHP_EOL .
-			'This is just a Test!'
-		);
+		// return $this->replyToChat(
+		// 	'Hi there!' . PHP_EOL .
+		// 	'This is just a Test!'
+		// );
+		return Request::emptyResponse();
 	}
 }
