@@ -7,9 +7,9 @@ use Longman\TelegramBot\Telegram;
 use Longman\TelegramBot\TelegramLog;
 use TelegramBot\Lib\Bot;
 
+TelegramLog::initialize(Bot::createLogger());
+
 try {
-	TelegramLog::initialize(Bot::createLogger());
-	
 	$bot = new Telegram(BOT_TOKEN, BOT_USERNAME);
 	
 	$bot->enableMySql([
