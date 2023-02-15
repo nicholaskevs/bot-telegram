@@ -2,7 +2,8 @@
     "require": {
         "php": "^8.0",
         "longman/telegram-bot": "^0.80.0",
-        "catfan/medoo": "^2.1"
+        "catfan/medoo": "^2.1",
+        "monolog/monolog": "^2.9"
     },
     "autoload": {
         "psr-4": {
