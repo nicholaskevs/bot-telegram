@@ -19,12 +19,12 @@ Class Bot
 		]);
 	}
 	
-	public static function createLogger() {
-		$logger = new Logger('TelegramBot');
+	public static function createLogger(String $name = 'Logger') {
+		$logger = new Logger($name);
 		if(ENV_DEV) {
 			$logger->pushHandler(new StreamHandler('php://stdout'));
 		} else {
-			$logger->pushHandler((new RotatingFileHandler('logs/TelegramBot.log', 7, Logger::INFO))->setFilenameFormat('{date}-{filename}', 'Y-m-d'));
+			$logger->pushHandler((new RotatingFileHandler("logs/$name.log", 7, Logger::INFO))->setFilenameFormat('{date}-{filename}', 'Y-m-d'));
 		}
 		
 		return $logger;

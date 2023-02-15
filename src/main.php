@@ -7,7 +7,7 @@ use Longman\TelegramBot\Telegram;
 use Longman\TelegramBot\TelegramLog;
 use TelegramBot\Lib\Bot;
 
-TelegramLog::initialize(Bot::createLogger());
+TelegramLog::initialize(Bot::createLogger('GetUpdatesBot'));
 
 try {
 	$bot = new Telegram(BOT_TOKEN, BOT_USERNAME);
