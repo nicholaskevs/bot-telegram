@@ -42,7 +42,7 @@ Class Bot
 			'database'	=> DB_DBNAME_VENDOR,
 		]);
 		
-		$bot->addCommandsPaths([
+		$bot->setCommandsPaths([
 			dirname(__DIR__).'/Command/Admin',
 			dirname(__DIR__).'/Command/System',
 			dirname(__DIR__).'/Command/User'
