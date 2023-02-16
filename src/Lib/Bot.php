@@ -32,6 +32,7 @@ Class Bot
 	}
 	
 	public static function initBot() {
+		$db = self::dbConnect();
 		$bot = new Telegram(BOT_TOKEN, BOT_USERNAME);
 		
 		$bot->enableMySql([
@@ -43,6 +44,10 @@ Class Bot
 		
 		$bot->addCommandsPath(dirname(__DIR__).'/Command');
 		
+		$admins = $db->select('users', 'telegram_id', ['admin'=>true]);
+		$bot->enableAdmins($admins);
+		
+		unset($db);
 		return $bot;
 	}
 }
