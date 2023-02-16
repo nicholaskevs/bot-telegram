@@ -14,7 +14,9 @@ try {
 	$response = $bot->handleGetUpdates();
 	
 	if($response->isOk()) {
-		TelegramLog::info('Processed '.count($response->getResult()).' updates');
+		if($totalUpdate = count($response->getResult())) {
+			TelegramLog::info("Processed $totalUpdate updates");
+		}
 	} else {
 		TelegramLog::error('Failed to fetch updates');
 		TelegramLog::error($response->printError());
