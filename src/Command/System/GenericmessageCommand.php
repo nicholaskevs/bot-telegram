@@ -4,6 +4,7 @@ namespace Longman\TelegramBot\Commands\SystemCommands;
 
 use Longman\TelegramBot\Commands\SystemCommand;
 use Longman\TelegramBot\Entities\ServerResponse;
+use Longman\TelegramBot\Request;
 use Longman\TelegramBot\Telegram;
 
 class GenericmessageCommand extends SystemCommand
@@ -20,9 +21,6 @@ class GenericmessageCommand extends SystemCommand
             return $active_conversation_response;
         }
 		
-		return $this->replyToChat(
-			"Hello\n".
-			"Type /help to see all commands"
-		);
+		return Request::emptyResponse();
 	}
 }
