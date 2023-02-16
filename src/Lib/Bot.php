@@ -42,7 +42,11 @@ Class Bot
 			'database'	=> DB_DBNAME_VENDOR,
 		]);
 		
-		$bot->addCommandsPath(dirname(__DIR__).'/Command');
+		$bot->addCommandsPaths([
+			dirname(__DIR__).'/Command/Admin',
+			dirname(__DIR__).'/Command/System',
+			dirname(__DIR__).'/Command/User'
+		]);
 		
 		$admins = $db->select('users', 'telegram_id', ['admin'=>true]);
 		$bot->enableAdmins($admins);
