@@ -38,7 +38,7 @@ Class Bot
 			'host'		=> DB_HOST,
 			'user'		=> DB_USERNAME,
 			'password'	=> DB_PASSWORD,
-			'database'	=> DB_DBNAME,
+			'database'	=> DB_DBNAME_VENDOR,
 		]);
 		
 		$bot->addCommandsPath(dirname(__DIR__).'/Command');
