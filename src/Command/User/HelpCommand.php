@@ -10,26 +10,69 @@ class HelpCommand extends UserCommand
 {
 	protected $name = 'help';
 	protected $description = 'Show command list';
-	protected $usage = '/help';
+	protected $usage = '/help or /help <command name>';
 	protected $version = '1.0.0';
 	
 	public function execute(): ServerResponse
 	{
 		$bot = $this->getTelegram();
-		$isAdmin = $bot->isAdmin($this->getMessage()->getFrom()->getId());
-		$commandList = '';
+		$message = $this->getMessage();
 		
-		foreach($bot->getCommandsList() as $command) {
-			if($command instanceof Command) {
-				if($isAdmin && $command->isAdminCommand()) {
-					$commandList .= $command->getUsage() . ' - '. $command->getDescription() . PHP_EOL;
-					
-				} elseif($command->isUserCommand()) {
-					$commandList .= $command->getUsage() . ' - '. $command->getDescription() . PHP_EOL;
+		$arg = trim($message->getText(true));
+		$isAdmin = $bot->isAdmin($message->getFrom()->getId());
+		$isPrivateChat = $message->getChat()->isPrivateChat();
+		$text = [];
+		
+		$commands = $bot->getCommandsList();
+		$commands = array_filter($commands, function (Command $command) {
+			return !$command->isSystemCommand() && $command->showInHelp();
+		});
+		ksort($commands);
+		
+		if($arg == '') {
+			$userCommands = array_filter($commands, function (Command $command) {
+				return $command->isUserCommand();
+			});
+			
+			$text[] = '*Command list:*';
+			
+			foreach($userCommands as $command) {
+				if($command instanceof Command) {
+					$text[] = '/' . $command->getName() . ($command->isEnabled() ? '' : ' *(DISABLED)*') .' - '. $command->getDescription();
 				}
 			}
+			
+			if($isAdmin && $isPrivateChat) {
+				$text[] = '';
+				$text[] = '*Admin Command list:*';
+				
+				$adminCommands = array_filter($commands, function (Command $command) {
+					return $command->isAdminCommand();
+				});
+				
+				foreach($adminCommands as $command) {
+					if($command instanceof Command) {
+						$text[] = '/' . $command->getName() . ($command->isEnabled() ? '' : ' *(DISABLED)*') .' - '. $command->getDescription();
+					}
+				}
+			}
+			
+			return $this->replyToChat(implode(PHP_EOL, $text), ['parse_mode' => 'Markdown']);
+		} else {
+			$text[] = 'Command not found';
+			
+			if(isset($commands[$arg])) {
+				$command = $commands[$arg];
+				
+				if($command instanceof Command) {
+					if(($command->isAdminCommand() && $isAdmin && $isPrivateChat) || $command->isUserCommand()) {
+						$text[] = 'Command: ' . $command->getName();
+						$text[] = 'Usage: ' . $command->getUsage();
+						$text[] = 'Description: ' . $command->getDescription();
+					}
+				}
+			}
+			return $this->replyToChat(implode(PHP_EOL, $text));
 		}
-		
-		return $this->replyToChat($commandList);
 	}
 }
