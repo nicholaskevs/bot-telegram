@@ -23,14 +23,14 @@ class HelpCommand extends UserCommand
 		$isPrivateChat = $message->getChat()->isPrivateChat();
 		$text = [];
 		
-		$commands = $bot->getCommandsList();
-		$commands = array_filter($commands, function (Command $command) {
+		$commandList = $bot->getCommandsList();
+		$commandList = array_filter($commandList, function (Command $command) {
 			return !$command->isSystemCommand() && $command->showInHelp();
 		});
-		ksort($commands);
+		ksort($commandList);
 		
 		if($arg == '') {
-			$userCommands = array_filter($commands, function (Command $command) {
+			$userCommands = array_filter($commandList, function (Command $command) {
 				return $command->isUserCommand();
 			});
 			
@@ -46,7 +46,7 @@ class HelpCommand extends UserCommand
 				$text[] = '';
 				$text[] = '*Admin Command list:*';
 				
-				$adminCommands = array_filter($commands, function (Command $command) {
+				$adminCommands = array_filter($commandList, function (Command $command) {
 					return $command->isAdminCommand();
 				});
 				
@@ -61,8 +61,8 @@ class HelpCommand extends UserCommand
 		} else {
 			$text[] = 'Command not found';
 			
-			if(isset($commands[$arg])) {
-				$command = $commands[$arg];
+			if(isset($commandList[$arg])) {
+				$command = $commandList[$arg];
 				
 				if($command instanceof Command) {
 					if(($command->isAdminCommand() && $isAdmin && $isPrivateChat) || $command->isUserCommand()) {
