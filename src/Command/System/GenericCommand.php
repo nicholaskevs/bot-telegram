@@ -4,6 +4,7 @@ namespace Longman\TelegramBot\Commands\SystemCommands;
 
 use Longman\TelegramBot\Commands\SystemCommand;
 use Longman\TelegramBot\Entities\ServerResponse;
+use Longman\TelegramBot\Request;
 use Longman\TelegramBot\Telegram;
 
 class GenericCommand extends SystemCommand
@@ -14,10 +15,15 @@ class GenericCommand extends SystemCommand
 	
 	public function execute(): ServerResponse
 	{
-		$command = $this->getMessage()->getCommand();
-		return $this->replyToChat(
-			"Command /{$command} not found\n".
-			"Type /help to see all commands"
-		);
+		// if($this->getChannelPost() || $this->getMyChatMember() || $this->getChatMember()) { // dont process channel post, my chat member, and chat member updates
+		// 	return Request::emptyResponse();
+		// }
+		
+		if($message = $this->getMessage()) {
+			return $this->replyToChat(
+				"Command /{$message->getCommand()} not found". PHP_EOL .
+				"Type /help to see all commands"
+			);
+		}
 	}
 }
