@@ -13,8 +13,8 @@ class UpdateuserCommand extends AdminCommand
 	protected $description = 'Update user data on database';
 	protected $usage = '/updateuser';
 	protected $version = '1.0.0';
-    protected $need_mysql = true;
-
+	protected $need_mysql = true;
+	
 	public function execute(): ServerResponse
 	{
 		$select = [
