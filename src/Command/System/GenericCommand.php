@@ -25,5 +25,7 @@ class GenericCommand extends SystemCommand
 				"Type /help to see all commands"
 			);
 		}
+		
+		return Request::emptyResponse();
 	}
 }
