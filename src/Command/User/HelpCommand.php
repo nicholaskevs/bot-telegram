@@ -25,7 +25,7 @@ class HelpCommand extends UserCommand
 		
 		$commandList = $bot->getCommandsList();
 		$commandList = array_filter($commandList, function (Command $command) {
-			return !$command->isSystemCommand() && $command->showInHelp();
+			return !$command->isSystemCommand() && $command->showInHelp() && $command->isEnabled();
 		});
 		ksort($commandList);
 		
@@ -38,7 +38,7 @@ class HelpCommand extends UserCommand
 			
 			foreach($userCommands as $command) {
 				if($command instanceof Command) {
-					$text[] = '/' . $command->getName() . ($command->isEnabled() ? '' : ' *(DISABLED)*') .' - '. $command->getDescription();
+					$text[] = '/' . $command->getName() .' - '. $command->getDescription();
 				}
 			}
 			
@@ -52,7 +52,7 @@ class HelpCommand extends UserCommand
 				
 				foreach($adminCommands as $command) {
 					if($command instanceof Command) {
-						$text[] = '/' . $command->getName() . ($command->isEnabled() ? '' : ' *(DISABLED)*') .' - '. $command->getDescription();
+						$text[] = '/' . $command->getName() .' - '. $command->getDescription();
 					}
 				}
 			}
