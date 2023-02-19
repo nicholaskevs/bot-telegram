@@ -10,7 +10,7 @@ TelegramLog::initialize(Bot::createLogger('RunCommandsBot'));
 
 try {
 	$bot = Bot::initBot();
-	$bot->runCommands(['/test']);
+	$bot->runCommands(['/sendtochannel -1001810806894 ummm']);
 	
 } catch(Exception $e) {
 	TelegramLog::error($e->getMessage());

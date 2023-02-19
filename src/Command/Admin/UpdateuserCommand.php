@@ -17,14 +17,12 @@ class UpdateuserCommand extends AdminCommand
 	
 	public function execute(): ServerResponse
 	{
-		$select = [
+		$data = DB::selectChats([
 			'channels'		=> true,
 			'users'			=> true,
 			'groups'		=> false,
 			'supergroups'	=> false
-		];
-		
-		$data = DB::selectChats($select);
+		]);
 		
 		if(Bot::updateUser($data)) {
 			return $this->replyToChat('User data on database updated');
