@@ -13,6 +13,7 @@ class AddchannelCommand extends AdminCommand
 	protected $description = 'Add channel to database';
 	protected $usage = '/addchannel <channel_title> or /addchannel <channel_id>';
 	protected $version = '1.0.0';
+    protected $enabled = false;
     protected $need_mysql = true;
 
 	public function execute(): ServerResponse
