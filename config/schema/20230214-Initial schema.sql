@@ -10,18 +10,10 @@ CREATE TABLE `users` (
 	PRIMARY KEY (`id`)
 );
 
-DROP TABLE IF EXISTS `channels`;
-CREATE TABLE `channels` (
-	`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`telegram_id` BIGINT(20) NOT NULL,
-	`name` VARCHAR(100) NULL,
-	PRIMARY KEY (`id`)
-);
-
 DROP TABLE IF EXISTS `forwarder`;
 CREATE TABLE `forwarder` (
 	`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`fromDiscordChannel_id` INT(11) UNSIGNED NOT NULL,
-	`toChannel_id` INT(11) UNSIGNED NOT NULL,
+	`fromChannelDiscord_id` INT(11) UNSIGNED NOT NULL,
+	`toChannelTelegram_id` INT(11) UNSIGNED NOT NULL,
 	PRIMARY KEY (`id`)
 );
