@@ -2,7 +2,9 @@
 
 namespace TelegramBot\Lib;
 
+use Exception;
 use Longman\TelegramBot\Telegram;
+use Longman\TelegramBot\TelegramLog;
 use Medoo\Medoo;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Handler\StreamHandler;
@@ -53,5 +55,26 @@ Class Bot
 		
 		unset($db);
 		return $bot;
+	}
+	
+	public static function updateUser(Array $users) {
+		$db = self::dbConnect();
+		
+		try {
+			foreach($users as $user) {
+				if($user['type'] == 'private') {
+					$db->update('users', [
+						'first_name'	=> $user['first_name'],
+						'last_name'		=> $user['last_name'],
+						'username'		=> $user['username']
+					], ['telegram_id' => $user['user_id']]);
+				}
+			}
+		} catch(Exception $e) {
+			TelegramLog::error($e->getMessage());
+			return false;
+		}
+		
+		return true;
 	}
 }
