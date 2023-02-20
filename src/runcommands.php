@@ -8,9 +8,14 @@ use TelegramBot\Lib\Bot;
 
 TelegramLog::initialize(Bot::createLogger('RunCommandsBot'));
 
+if(!isset($commands) || !is_array($commands)) {
+	TelegramLog::info('No command to be run');
+	die;
+}
+
 try {
 	$bot = Bot::initBot();
-	$bot->runCommands(['/sendtochannel -1001810806894 ummm']);
+	$bot->runCommands($commands);
 	
 } catch(Exception $e) {
 	TelegramLog::error($e->getMessage());
