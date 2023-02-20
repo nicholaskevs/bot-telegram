@@ -7,7 +7,7 @@ $shortOpt .= "c:";
 $opt = getopt($shortOpt);
 
 if(empty($opt)) {
-	require 'src/main.php';
+	require 'src/getupdates.php';
 	
 } elseif(isset($opt['c'])) {
 	$commands = explode(',', $opt['c']);
