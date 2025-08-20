@@ -1,0 +1,41 @@
+name: bot-telegram
+
+networks:
+  network:
+    driver: bridge
+
+services:
+  webserver:
+    container_name: webserver
+      # build:
+      #   context: ./php
+    image: php:8.2-apache
+    volumes:
+      - ../:/var/www/html
+    ports:
+      - 80:80
+    networks:
+      - network
+  
+  mysql:
+    container_name: mysql
+    image: mysql:8.0
+    ports:
+      - 3306:3306
+    networks:
+      - network
+    environment:
+      MYSQL_ROOT_PASSWORD: asdasd
+      MYSQL_DATABASE: testdb
+    
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin:5.2.2
+    ports:
+      - 8080:80
+    networks:
+      - network
+    depends_on:
+      - mysql
+    environment:
+      PMA_HOST: mysql
