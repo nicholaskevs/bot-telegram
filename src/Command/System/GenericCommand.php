@@ -15,9 +15,9 @@ class GenericCommand extends SystemCommand
 	
 	public function execute(): ServerResponse
 	{
-		// if($this->getChannelPost() || $this->getMyChatMember() || $this->getChatMember()) { // dont process channel post, my chat member, and chat member updates
-		// 	return Request::emptyResponse();
-		// }
+		if($this->getChannelPost() || $this->getMyChatMember() || $this->getChatMember()) { // dont process channel post, my chat member, and chat member updates
+			return Request::emptyResponse();
+		}
 		
 		if($message = $this->getMessage()) {
 			return $this->replyToChat(

@@ -73,8 +73,37 @@ Class Bot
 		} catch(Exception $e) {
 			TelegramLog::error($e->getMessage());
 			return false;
+			
+		} finally {
+			unset($db);
 		}
 		
 		return true;
+	}
+	
+	private static function generateAPIKey(): string {
+		$db = self::dbConnect();
+		
+		do {
+			$key = implode('-', str_split(substr(strtolower(md5(microtime() . rand(1000, 9999))), 0, 20), 5));
+			
+			$check =  $db->select('users', '*', ['api_key' => $key]);
+		} while(!empty($check));
+		
+		unset($db);
+		return $key;
+	}
+	
+	public static function validateAPIKey(string $key): int|bool {
+		$db = self::dbConnect();
+		
+		$user = $db->select('users', 'id', ['api_key' => $key]);
+		unset($db);
+		
+		if(empty($user)) {
+			return false;
+		} else {
+			return $user[0];
+		}
 	}
 }

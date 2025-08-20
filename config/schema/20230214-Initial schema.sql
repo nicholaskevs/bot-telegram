@@ -6,6 +6,7 @@ CREATE TABLE `users` (
 	`first_name` VARCHAR(255) NOT NULL,
 	`last_name` VARCHAR(255) NULL,
 	`username` CHAR(191) NULL,
+	`api_key` VARCHAR(23) NULL,
 	`admin` TINYINT(1) NOT NULL DEFAULT 0,
 	PRIMARY KEY (`id`)
 );
