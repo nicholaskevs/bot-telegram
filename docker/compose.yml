@@ -8,9 +8,9 @@ networks:
 services:
   webapp:
     container_name: webapp
-      # build:
-      #   context: ./php
-    image: php:8.2-apache
+    build:
+      context: ../
+      dockerfile: ./docker/php/Dockerfile
     volumes:
       - ../:/var/www/html
     ports:
