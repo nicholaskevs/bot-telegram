@@ -1,12 +1,13 @@
 name: bot-telegram
 
 networks:
-  network:
+  default:
+    name: bot-telegram
     driver: bridge
 
 services:
-  webserver:
-    container_name: webserver
+  webapp:
+    container_name: webapp
       # build:
       #   context: ./php
     image: php:8.2-apache
@@ -15,26 +16,26 @@ services:
     ports:
       - 80:80
     networks:
-      - network
+      - default
+    depends_on:
+      - mysql
   
   mysql:
     container_name: mysql
-    image: mysql:8.0
-    ports:
-      - 3306:3306
+    image: mysql:8.4.6
     networks:
-      - network
+      - default
     environment:
       MYSQL_ROOT_PASSWORD: asdasd
       MYSQL_DATABASE: testdb
-    
+  
   phpmyadmin:
     container_name: phpmyadmin
     image: phpmyadmin:5.2.2
     ports:
       - 8080:80
     networks:
-      - network
+      - default
     depends_on:
       - mysql
     environment:
