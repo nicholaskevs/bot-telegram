@@ -13,6 +13,7 @@ services:
       dockerfile: ./docker/php/Dockerfile
     volumes:
       - ../:/var/www/html
+      - ./php/php.ini:/usr/local/etc/php/php.ini
     ports:
       - 80:80
     networks:

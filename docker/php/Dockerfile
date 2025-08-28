@@ -2,10 +2,13 @@ FROM php:8.2-apache
 
 RUN apt-get update \
 	&& apt-get install -y \
-    zlib1g-dev \
     libzip-dev \
+	libicu-dev \
     zip
-RUN docker-php-ext-install zip
+
+RUN docker-php-ext-install \
+	zip \
+	intl
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 

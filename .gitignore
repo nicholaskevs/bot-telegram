@@ -5,3 +5,6 @@ composer.lock
 # bot
 /config/cons.php
 /logs/
+
+# codeigniter
+.env
