@@ -1,10 +1,31 @@
-# composer
+# Composer
 composer.lock
 /vendor/
 
-# bot
-/config/cons.php
-/logs/
+# Bot
+/bot/config/cons.php
+/bot/logs/
 
-# codeigniter
+# CodeIgniter
 .env
+/writable/cache/
+!/writable/cache/index.html
+/writable/debugbar/
+!/writable/debugbar/index.html
+/writable/logs/
+!/writable/logs/index.html
+/writable/session/
+!/writable/session/index.html
+/writable/uploads/
+!/writable/uploads/index.html
+/writable/**/*.db
+/writable/**/*.sqlite
+php_errors.log
+phpunit
+/phpunit*.xml
+
+# Windows
+Thumbs.db
+
+# MacOS
+.DS_Store
