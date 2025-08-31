@@ -12,7 +12,7 @@ Simple Telegram bot to get message content from database and forward it to teleg
 
 ### How to install
 
-1. Download [here](https://github.com/nicholaskevs/bot-telegram/archive/refs/heads/master.zip)
+1. Download [master here](https://github.com/nicholaskevs/bot-telegram/archive/refs/heads/master.zip)
 2. Extract
 3. Install dependency with `composer`
 4. Go to `config` folder
