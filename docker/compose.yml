@@ -5,6 +5,9 @@ networks:
     name: bot-telegram
     driver: bridge
 
+volumes:
+  phpmyadmin:
+
 services:
   webapp:
     container_name: webapp
@@ -12,32 +15,46 @@ services:
       context: ../
       dockerfile: ./docker/php/Dockerfile
     volumes:
-      - ../:/var/www/html
+      - ../laravel:/var/www/html
       - ./php/php.ini:/usr/local/etc/php/php.ini
-    ports:
-      - ${WEBAPP_PORT:-80}:80
     networks:
       - default
     depends_on:
       - mysql
-  
-  mysql:
-    container_name: mysql
-    image: mysql:8.4
-    networks:
-      - default
-    environment:
-      MYSQL_ROOT_PASSWORD: ${WEBAPP_PORT:-root}
-      MYSQL_DATABASE: testdb
-  
+
   phpmyadmin:
     container_name: phpmyadmin
-    image: phpmyadmin:5.2
-    ports:
-      - ${PMA_PORT:-8080}:80
+    image: phpmyadmin:5.2-fpm
+    volumes:
+      - phpmyadmin:/var/www/html
     networks:
       - default
     depends_on:
       - mysql
     environment:
       PMA_HOST: mysql
+      PMA_ABSOLUTE_URI: ${WEBAPP_URL:-http://localhost}${WEBAPP_PORT:+:${WEBAPP_PORT}}/phpmyadmin/
+
+  nginx:
+    container_name: nginx
+    image: nginx:1.30
+    ports:
+      - ${WEBAPP_PORT:-80}:80
+    volumes:
+      - ../laravel:/var/www/html
+      - phpmyadmin:/var/www/phpmyadmin:ro
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - default
+    depends_on:
+      - webapp
+      - phpmyadmin
+
+  mysql:
+    container_name: mysql
+    image: mysql:8.4
+    networks:
+      - default
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
+      MYSQL_DATABASE: testdb

@@ -1,4 +1,4 @@
-FROM php:8.2-apache-trixie
+FROM php:8.2-fpm-trixie
 
 RUN apt-get update \
 	&& apt-get install -y \
@@ -9,9 +9,6 @@ RUN apt-get update \
 RUN docker-php-ext-install \
 	zip \
 	intl
-
-RUN a2enmod rewrite
-RUN service apache2 restart
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
