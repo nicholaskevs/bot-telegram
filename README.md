@@ -6,6 +6,7 @@ Simple Telegram bot to get message content from database and forward it to teleg
 
 ### Requirement
 
+- Docker
 - PHP >=8.2
 - MySQL
 - For windows, add php folder path to system variables `path`, follow this [guide](https://www.computerhope.com/issues/ch000549.htm)
